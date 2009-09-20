@@ -1,1 +1,32 @@
-LuaRecipes is a development project to create a website for submission, collaboration, review and searching of recipes for the Lua programming language.
+## Introduction
+
+LuaRecipes is a development project to create a website for submission,
+collaboration, review and searching of recipes for the [Lua][4] programming
+language.  This project was prompted by a [post][1] from Steve Donovan on the
+lua-l mailing list.  This codebase is an attempt to realize the discussed
+project.
+
+## Project Layout
+
+The initial attempt at this project is based on [Sputnik][2], a wiki and
+content platform written using Lua.  The project source is organized in the
+following way:
+
+  * README - This readme file
+  * setup.sh - A unix setup script that downloads and install Lua/Luarocks/Sputnik/Kepler within a subdirectory.  This installation will not affect any other Lua installation on your system.
+  * sputnik.git - This directory holds a submodule that contains the git master from the Sputnik [repository][3].
+  * luarecipes - This directory contains the rock definition and code for a sputnik module, where all of the custom code for the application will be stored.
+
+After running the setup script, will have a directory called `sandbox` inside
+this directory as well.  It will contain your Lua installation, your
+[Luarocks][5] installation, [Kepler][6] and any other supporting code.  This
+file is ignored by git and should not contain anything other than the software
+necessary to run an instance of LuaRecipes on your local machine. 
+
+[1]: http://lua-users.org/lists/lua-l/2009-09/msg00465.html
+[2]: http://spu.tnik.org/
+[3]: http://gitorious.org/sputnik/
+[4]: http://www.lua.org/
+[5]: http://www.luarocks.org
+[6]: http://www.keplerproject.org/
+
