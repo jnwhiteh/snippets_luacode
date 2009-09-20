@@ -1,0 +1,3 @@
+[submodule "sputnik.git"]
+	path = sputnik.git
+	url = git://gitorious.org/sputnik/mainline.git
