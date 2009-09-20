@@ -17,7 +17,8 @@ popd
 popd
 
 # Download and install sputnik mainline as a submodule
-git submodule add git://gitorious.org/sputnik/mainline.git sputnik.git
+git submodule init
+git submodule update
 
 # Link the rocks in sputnik mainline to our current installation
 bash sputnik.git/scripts/link_rock.sh -i "${BASE_DIR}/sandbox" -g sputnik.git
