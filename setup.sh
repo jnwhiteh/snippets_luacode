@@ -20,6 +20,9 @@ popd
 git submodule init
 git submodule update
 
+pushd sputnik.git
+git checkout master
+
 # Link the rocks in sputnik mainline to our current installation
 bash sputnik.git/scripts/link_rock.sh -i "${BASE_DIR}/sandbox" -g sputnik.git
 
