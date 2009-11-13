@@ -8,7 +8,7 @@ BASE_DIR=`pwd`
 mkdir -p sandbox/src
 
 pushd sandbox/src
-curl http://spu.tnik.org/files/sputnik-9.03.16-kaio.tar.gz -O
+curl http://sputnik.freewisdom.org/files/sputnik-9.03.16-kaio.tar.gz -O
 tar zxf sputnik-9.03.16-kaio.tar.gz
 pushd sputnik-9.03.16-kaio
 
