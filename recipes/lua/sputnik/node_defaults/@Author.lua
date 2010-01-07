@@ -12,11 +12,13 @@ NODE.content = ""
 
 NODE.permissions = [[
   deny(all_users,"edit")
-  allow(Author, "edit")
+  allow(function(user,node)
+    if not user then return false end
+    if user == 'Admin' or user == node.id:match('authors/(.+)'):gsub('_',' ') then
+        return true
+    end
+  end, "edit")
+   deny(all_users,"remove")
 ]]
 
---[[
-  allow(fd,
-  edit_and_save)
-]]
 

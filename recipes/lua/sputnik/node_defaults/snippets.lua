@@ -6,7 +6,10 @@ NODE.prototype = "@Collection"
 NODE.title = "Lua Snippets"
 NODE.breadcrumb = "Lua Snippets"
 NODE.translations = "sputnik_translations"
-NODE.permissions = "deny(Authenticated, edit_and_save)"
+NODE.permissions = [[
+    deny(all_users, edit_and_save)
+    deny(all_users,"remove")
+]]
 
 NODE.child_proto = "@LuaSnippet"
 NODE.child_uid_format = "$slug_%d"

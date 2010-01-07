@@ -21,19 +21,16 @@ function save_snippet(node, request, sputnik)
    end
 
    -- If the node is being saved, set initial params
-   --print('creation_time',node.creation_time)
    if not node.creation_time then
        params.author = request.user or "Anonymous user"
        params.creation_time = tostring(os.time())
    end
    -- temporary (shd be on creation only)
-   --print(node.uid,new_id,recipes.get_uid(new_id))
    if not node.uid then
         params.uid = recipes.get_uid(new_id)
    end
 
    -- be strict about this!  (Not filling in tags is not a terminal offence)
-   --print('title',node.title)
    if not check_existing_snippets('title',request.params.title) then
         err_msg = "Title already used"
    end
@@ -49,13 +46,11 @@ function save_snippet(node, request, sputnik)
             if not check_existing_snippets('mod',params.mod) then
                 err_msg = ("Module %s already used"):format(params.mod)
             end
-            --print('mod:',params.mod)
        elseif #scan.export_fun > 0 then
             params.fun = scan.export_fun[1]
             if not check_existing_snippets('fun',params.fun) then
                 err_msg = ("Function '%s' already used"):format(params.fun)
             end
-            --print('fun:',params.fun)
         end
         -----------------------------------------------------------------------------
 
@@ -71,12 +66,10 @@ function save_snippet(node, request, sputnik)
             if foreign[snippet.fun] then
                 append(imports,id)
                 foreign[snippet.fun] = nil
-                --print('needs:',id)
             end
             if requires[snippet.mod] then
                 append(required,id)
                 requires[snippet.mod] = nil
-                --print('require:',id)
             end
         end
 

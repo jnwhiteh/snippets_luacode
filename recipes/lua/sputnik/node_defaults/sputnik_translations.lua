@@ -18,10 +18,16 @@ EDIT_FORM_LICENCE = {
 EDIT_FORM_TAGS = {
     en_US = "Tags"
 }
+EDIT_FORM_TESTS = {
+    en_US = "Tests/Usage"
+}
 ADD_NEW_LUA_SNIPPET = {
     en_US = "Add new Lua Snippet",
 }
 EDIT_FORM_SNIPPET_SECTION = {
     en_US = "Snippet Fields",
+}
+REMOVE = {
+    en_US = "Remove"
 }
 ]==]

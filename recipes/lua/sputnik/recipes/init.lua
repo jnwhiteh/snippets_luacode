@@ -16,8 +16,23 @@ function index_of (tbl,val,key)
     end
 end
 
+function empty (val)
+    return val==nil or #val == 0
+end
+
+-- note the convention for 'removed' snippets; they are just made hidden
+
 function get_snippets (sputnik)
-    return sputnik.saci:get_nodes_by_prefix 'snippets'
+    local t = sputnik.saci:get_nodes_by_prefix 'snippets'
+    for id,snip in pairs(t) do
+        if snip.title == '' then t[id] = nil end
+    end
+    return t
+end
+
+function remove_snippet(sputnik,node)
+   sputnik:update_node_with_params(node, {title = ''})
+   node:save()
 end
 
 function get_uid (id)
@@ -32,6 +47,15 @@ function get_snippet_uids (sputnik,snippets)
         res[get_uid(id)] = id
     end
     return res
+end
+
+function get_snippet_from_uid(uid,sputnik,snippets)
+    snippets = snippets or get_snippets(sputnik)
+    for id,snip in pairs(snippets) do
+        if get_uid(id) == uid then
+            return id
+        end
+    end
 end
 
 function get_snippets_in_order (sputnik,snippets)
@@ -72,6 +96,17 @@ function extract_tags (snippet)
     return get_list_(snippet.tags)
 end
 
+function extract_modules (snippet)
+    local ls = get_list_(snippet.requires)
+    if #ls == 0 then return ls end
+    local res = {}
+    for _,r in ipairs(ls) do
+        if not r:find '^snippets/' then append(res,r) end
+    end
+    return res
+end
+
+
 -- given two tag lists, return all the tags in tags1 also present in tags2
 function intersection (tags1,tags2)
     local res = {}
@@ -83,7 +118,20 @@ function intersection (tags1,tags2)
     return res
 end
 
-local function update_count_map (map,key)
+function node_history (sputnik,id)
+    local history = sputnik:get_history (id)
+    if not history then return {} end
+    local res = {}
+    for i = 1,#history do
+        local h = history[i]
+        res[i] = sputnik:get_node(id,h.version)
+        res[i].timestamp = h.timestamp
+        res[i].editor = h.author
+    end
+    return res
+end
+
+function update_count_map (map,key)
     if not map[key] then
         map[key] = 0
     end
@@ -120,6 +168,17 @@ function get_all_authors (sputnik)
         end
     end
     return map_to_sorted_list(authors)
+end
+
+function get_all_modules (sputnik)
+    local tbl = get_snippets(sputnik)
+    local map = {}
+    for _,snippet in pairs(tbl) do
+        for _,mod in ipairs(extract_modules(snippet)) do
+            update_count_map(map,mod)
+        end
+    end
+    return map_to_sorted_list(map)
 end
 
 -- given a snippet node, return a table of relevant snippets according to tag match score.
