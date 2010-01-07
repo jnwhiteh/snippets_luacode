@@ -1,38 +1,20 @@
 module(..., package.seeall)
 
 NODE = {}
-NODE.title = "@LuaSnippet prototype for Lua snippets"
+NODE.title = "@Tag prototype for tags"
 NODE.actions = [[
-  show = "snippets.show_snippet"
-  preview = "snippets.show_snippet"
+  show = "tags.show_tags"
 ]]
-
--- save = "snippets.save_snippet"
-NODE.save_hook = "snippets.save_snippet"
 
 NODE.translations = "sputnik_translations"
 NODE.icon = "icons/lua.png"
 NODE.content = ""
 
-NODE.fields = [[
-  author = {1.3}
-  description = {1.4}
-  creation_time = {1.5}
-  short_desc = {1.6}
-  licence = {1.7}
-  tags = {1.8}
-  fun = {1.9}
-  mod = {2.0}
-  requires = {2.1}
-  needs = {2.2}
-  uid = {2.3}
-  error = {2.4}
-]]
-
 NODE.permissions = [[
   allow(Authenticated, edit_and_save)
 ]]
 
+--[==[
 NODE.edit_ui=[[
   reset()
   title = {1.0, "text_field"}
@@ -49,3 +31,4 @@ snippet_section  = {1.410, "div_start", id="snippet_section", closed="true"}
   creation_time = {1.413, "text_field"}
 snippet_section_end = {1.418, "div_end"}
 ]]
+--]==]

@@ -4,10 +4,7 @@ NODE = {}
 NODE.title = "@LuaSnippet prototype for Lua snippets"
 NODE.actions = [[
   show = "snippets.show_snippet"
-  preview = "snippets.show_snippet"
 ]]
-
--- save = "snippets.save_snippet"
 NODE.save_hook = "snippets.save_snippet"
 
 NODE.translations = "sputnik_translations"
@@ -19,14 +16,6 @@ NODE.fields = [[
   description = {1.4}
   creation_time = {1.5}
   short_desc = {1.6}
-  licence = {1.7}
-  tags = {1.8}
-  fun = {1.9}
-  mod = {2.0}
-  requires = {2.1}
-  needs = {2.2}
-  uid = {2.3}
-  error = {2.4}
 ]]
 
 NODE.permissions = [[
@@ -36,10 +25,8 @@ NODE.permissions = [[
 NODE.edit_ui=[[
   reset()
   title = {1.0, "text_field"}
-  licence = {1.1,"text_field"}
-  tags = {1.2,"text_field"}
-  description = {1.3, "textarea", editor_modules = {"resizeable", "markitup"}, rows = 4}
-  content = {1.4, "textarea", editor_modules = {"validatelua", "resizeable"}, rows = 15}
+  description = {1.1, "textarea", editor_modules = {"resizeable", "markitup"}, rows = 4}
+  content = {1.2, "textarea", editor_modules = {"validatelua", "resizeable"}, rows = 15}
 ]]
 
 NODE.admin_edit_ui = [[

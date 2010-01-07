@@ -12,8 +12,14 @@ EDIT_FORM_DESCRIPTION = {
 EDIT_FORM_CONTENT = {
     en_US = "Snippet Code",
 }
+EDIT_FORM_LICENCE = {
+    en_US = "Licence"
+}
+EDIT_FORM_TAGS = {
+    en_US = "Tags"
+}
 ADD_NEW_LUA_SNIPPET = {
-    en_US = "Add new Lua snippet",
+    en_US = "Add new Lua Snippet",
 }
 EDIT_FORM_SNIPPET_SECTION = {
     en_US = "Snippet Fields",
