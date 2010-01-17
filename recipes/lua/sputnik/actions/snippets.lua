@@ -151,10 +151,10 @@ local tests_tmpl = [=[
 <pre>$test</pre>
 ]=]
 
-local function create_tests_section (node)
+local function create_tests_section (node, sputnik)
     if not empty(node.tests) then
         return cosmo.f(tests_tmpl) {
-            test = node.tests
+            test = sputnik:escape(node.tests)
         }
     else
         return ''
@@ -195,7 +195,7 @@ function actions.display_snippet(node, request, sputnik, info)
     local idx  = recipes.index_of(uids,uid,'uid')
     local related = recipes.relevant_snippets(node,sputnik,snippets)
     local reqstr = create_required_list(node,snippets)
-    local teststr = create_tests_section(node)
+    local teststr = create_tests_section(node, sputnik)
     local commentstr = create_comment_section(node,sputnik)
 
     local function ref_by_uid (delta,text)
@@ -216,7 +216,7 @@ function actions.display_snippet(node, request, sputnik, info)
         comments = commentstr,
         error = not empty(node.error) and ('<h2 style="color:red">%s</h2> '):format(node.error) or '',
         description = node.markup.transform(node.description),
-        code = node.content,
+        code = util.escape(node.content),
         author = node.author,
         licence = node.licence ,
         revision = info.version,

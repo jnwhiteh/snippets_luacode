@@ -57,7 +57,7 @@ NODE.edit_ui=[[
 NODE.admin_edit_ui = [[
 snippet_section  = {1.410, "div_start", id="snippet_section", closed="true"}
   author = {1.412, "text_field"}
-  description = {1.413, "textarea", editor_modules = {"resizeable", "markdown"}}
+  description = {1.413, "textarea", editor_modules = {"resizeable", "markitup"}}
   creation_time = {1.414, "text_field"}
   fun = {1.415,"text_field"}
   mod = {1.415,"text_field"}
