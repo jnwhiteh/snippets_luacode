@@ -289,7 +289,7 @@ NODE.html_sidebar = [==[
     </div>
     <div id="search">
      <form action="$base_url" class="search">
-      <input class="hidden" type="hidden" name="p" value="sputnik/search"/>
+      <input class="hidden" type="hidden" name="p" value="snip_search"/>
       <input class="search_box" type="text" name="q" size="16"
              title="_(TOOLTIP_FOR_SEARCH_BOX)" value="$search_box_content"/>
       <input class="search_button" type="image" src="http://losr.org/img/search.png" alt="_(BUTTON)"/>
