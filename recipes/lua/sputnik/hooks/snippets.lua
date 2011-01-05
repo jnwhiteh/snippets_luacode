@@ -36,7 +36,10 @@ function save_snippet(node, request, sputnik)
    end
 
    if #node.content > 0 then
-       local scan = parser.scan_lua_code(node.content)
+       local res,scan = pcall(parser.scan_lua_code,node.content)
+       if not res then
+            err_msg = "Scan failed, but no worries"
+        else
 
        ---------------------- Exports ---------------------------------------------
        -- a snippet can either export a module, a single function or just be an example
@@ -89,7 +92,7 @@ function save_snippet(node, request, sputnik)
             end
             params.requires = recipes.list(res)
         end
-
+      end
     end
 
     ---------------------------------------------------------------------------------
