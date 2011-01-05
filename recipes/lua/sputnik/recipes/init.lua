@@ -143,7 +143,7 @@ local function map_to_sorted_list (map)
     for key,val in pairs(map) do
         append(res,{name=key,value=val})
     end
-    table.sort(res,function(a,b) return a.name > b.name end)
+    table.sort(res,function(a,b) return a.name < b.name end)
     return res
 end
 
