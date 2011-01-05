@@ -48,8 +48,8 @@ local globals = {
 local append = table.insert
 
 function token_list (s)
-    local tt = {{type='space',value=''}}
-    for token,value in lexer.lua(s,{space=true,comments=true}) do
+    local tt = {{type='space',value=''}} -- so tt[i-1] is always valid
+    for token,value in lexer.lua(s,{space=true}) do --  ,comments=true}) do
         if token == 'keyword' then
             token = value
         end
@@ -60,7 +60,7 @@ end
 
 local function dump (msg,t)
     io.write(msg,': ')
-    for v in pairs(t) do
+    for k,v in pairs(t) do
         io.write(v,' ')
     end
     print()
@@ -91,7 +91,7 @@ function scan_lua_code (s)
 
     local function skip_list (i,delim_set)
         i = i + 1
-        while delim_set[tt[i].type] do
+        while tt[i] and delim_set[tt[i].type] do
             i = i + 2
         end
         return i
@@ -101,9 +101,20 @@ function scan_lua_code (s)
     local skip_var_chain = specialize(skip_list,var_chain)
     local skip_arg_list = specialize(skip_list,{[',']=true})
 
-    local function declare (name)
-        declared[name] = true
-        --print('declared',name)
+    local function eof(i)
+        return not tt[i+2] or (tt[i+2].value == ';' and not tt[i+3])
+    end
+
+    local function declare (name,field)
+        if field then
+            if declared[name] == nil or declared[name] == true then
+                declared[name] = {}
+            end
+            declared[name][field] = true
+        else
+            declared[name] = true
+        end
+        --print('declared',name,field)
     end
 
     local function declare_list (i)
@@ -116,22 +127,27 @@ function scan_lua_code (s)
         return i
     end
 
+    local blevel = 1
+
     local i,n = 1,#tt
     while i <= n do
         local t = tt[i]
         if  t.type == 'function' then
+            blevel = blevel + 1
             local lastt,nextt,name = tt[i-1],tt[i+1]
+            local fname
             if nextt.type == 'iden' then
                 name = nextt.value
                 i = i + 2
                 if var_chain[tt[i].type] then
+                    fname = ''
                     while var_chain[tt[i].type] do
-                        name = name .. tt[i].type .. tt[i+1].value
+                        fname = fname .. tt[i].type .. tt[i+1].value
                         i = i + 2
                     end
-                    i = i - 1
+                    --i = i - 1
                 end
-                declare(name)
+                declare(name,fname)
             else
                 i = i + 1
             end
@@ -143,8 +159,8 @@ function scan_lua_code (s)
                 end
                 i = i - 1
             end
-            -- global function as export
-            if lastt.type ~= 'local' and lastt.type ~= '=' and name then
+            -- global function as export, unless the function was inside a table
+            if lastt.type ~= 'local' and lastt.type ~= '=' and name and not fname then
                 export_fun[name] = true
             end
         elseif  t.value == 'module' then -- module as export
@@ -152,8 +168,22 @@ function scan_lua_code (s)
             if mod then export_mod[mod] = true end
         elseif t.value == 'for' then -- implicit declaration in for statement
             i = declare_list(i)
+            blevel = blevel + 1
         elseif t.value == 'local' and tt[i+1].type ~= 'function' then
             i = declare_list(i)
+            blevel = blevel + 1
+        elseif t.value == 'if' then
+            blevel = blevel + 1
+        elseif t.value == 'repeat' then
+            blevel = blevel + 1
+        elseif t.value == 'end' then
+            blevel = blevel - 1
+        elseif t.value == 'until' then
+            blevel = blevel - 1
+        elseif t.value == 'return' then
+            if tt[i+1].type == 'iden' and eof(i) then
+                export_mod[tt[i+1].value] = true  -- 'new style' module
+            end
         end
         if t.value == 'require' then
             local mod = string_arg(i)
@@ -176,6 +206,13 @@ function scan_lua_code (s)
             elseif declared[name] then -- e.g. obj:method()
                 i = skip_var_chain(i)
             end
+        elseif t.type == 'comment' then
+            local type,name = t.value:match('@(%w+)%s+(.+)')
+            if type == 'class' or type == 'function' then
+                export_fun[name] = true
+            elseif type == 'module' then
+                export_mod[name] = true
+            end
         end
         i = i + 1
     end
@@ -188,5 +225,4 @@ function scan_lua_code (s)
         foreign = set2list(foreign)
     }
 end
-
 
