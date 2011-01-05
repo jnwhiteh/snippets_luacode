@@ -148,7 +148,7 @@ end
 
 local tests_tmpl = [=[
 <p><b>Tests/Usage</b></p>
-<pre>$test</pre>
+<pre class="brush: lua; gutter: false">$test</pre>
 ]=]
 
 local function create_tests_section (node, sputnik)
@@ -173,7 +173,7 @@ $do_tags[[
 ]]
 </p>
 <h3>Snippet</h3>
-<pre>$code</pre>
+<pre class="brush: lua; gutter: false">$code</pre>
 $tests
 $required
 <p><b>Related Snippets</b></p>
