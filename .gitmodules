@@ -1,3 +1,21 @@
 [submodule "sputnik.git"]
 	path = sputnik.git
-	url = git://gitorious.org/sputnik/mainline.git
+	url = git://github.com/yuri/sputnik.git
+[submodule "lua-diff.git"]
+	path = lua-diff.git
+	url = git://github.com/yuri/lua-diff.git
+[submodule "lua-js-syntaxhighlighter.git"]
+	path = lua-js-syntaxhighlighter.git
+	url = https://github.com/yuri/lua-js-syntaxhighlighter.git
+[submodule "sputnik-rocks/syntaxhighlighter.git"]
+	path = sputnik-rocks/syntaxhighlighter.git
+	url = https://github.com/yuri/lua-js-syntaxhighlighter.git
+[submodule "sputnik-rocks/diff.git"]
+	path = sputnik-rocks/diff.git
+	url = git://github.com/yuri/lua-diff.git
+[submodule "sputnik-rocks/xssfilter.git"]
+	path = sputnik-rocks/xssfilter.git
+	url = git://github.com/yuri/lua-xssfilter.git
+[submodule "sputnik-rocks/recaptcha.git"]
+	path = sputnik-rocks/recaptcha.git
+	url = https://github.com/yuri/lua-recaptcha.git
