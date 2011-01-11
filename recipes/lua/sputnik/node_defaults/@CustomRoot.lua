@@ -212,7 +212,22 @@ NODE.html_head      = [=[  <meta http-equiv="Content-Type" content="text/html; c
 ]]<link rel="shortcut icon" href="$favicon_url"/>
   <link rel="alternate" type="application/rss+xml" title="_(RECENT_EDITS_TO_SITE)" $site_rss_link/>
   <link rel="alternate" type="application/rss+xml" title="_(RECENT_EDITS_TO_NODE)" $node_rss_link/>
-  $if_no_index[[<meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>]]]=]
+  $if_no_index[[<meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>]]
+
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20679350-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+]=]
 
 NODE.html_menu      = [==[<ul class="level1">$do_nav_sections[=[
      <li class='$class level1' id='menu_item_$id'>
